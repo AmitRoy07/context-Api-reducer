@@ -76,6 +76,11 @@
 .input-group-text {
   background: transparent;
 }
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background: none;
+}
 /* Media Queries */
 @media (max-width: 771px) {
   .filters {

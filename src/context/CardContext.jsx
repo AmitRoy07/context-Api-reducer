@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { createContext, useContext, useReducer, useState } from "react";
-import { CartReducer } from "./CardReducer";
+import { CartReducer, productReducer } from "./CardReducer";
 
 const Card = createContext();
 
@@ -22,9 +22,20 @@ const CardContextProvider = ({ children }) => {
     card: [],
   });
 
+  const [productState, productDispatch] = useReducer(productReducer, {
+    byStock: false,
+    byFastDelivery: false,
+    byRating: 0,
+    searchQuery: "",
+  });
+
   // console.log(products);
 
-  return <Card.Provider value={{ state, dispatch }}>{children}</Card.Provider>;
+  return (
+    <Card.Provider value={{ state, dispatch, productState, productDispatch }}>
+      {children}
+    </Card.Provider>
+  );
 };
 
 export default CardContextProvider;

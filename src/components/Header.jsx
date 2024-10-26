@@ -10,6 +10,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { CartState } from "../context/CardContext";
 
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const {
@@ -17,17 +18,30 @@ const Header = () => {
     dispatch,
   } = CartState();
 
+  const {
+    productState: { searchQuery },
+    productDispatch,
+  } = CartState();
+
+  console.log(searchQuery);
+
   return (
     <>
       {" "}
       <Navbar bg='dark' variant='dark' expand='lg' className=''>
         <Container>
-          <Navbar.Brand href='#home'>Shopping cart</Navbar.Brand>
+          <Navbar.Brand href='/'>Shopping cart</Navbar.Brand>
           <Navbar.Text className='search flex-grow-1'>
             <FormControl
               style={{ width: "100%", maxWidth: "500px" }}
               placeholder='Search a product...'
               className='m-auto'
+              onChange={(e) => {
+                productDispatch({
+                  type: "FILTER_BY_SEARCH",
+                  payload: e.target.value.toLowerCase(),
+                });
+              }}
             />
           </Navbar.Text>
           <Nav className='me-auto'>
@@ -65,6 +79,11 @@ const Header = () => {
                 ) : (
                   <span>NO Item Added</span>
                 )}
+                <Dropdown.Item as='div'>
+                  <Link className='btn btn-primary w-100 mt-2' to='/cart'>
+                    Go to card
+                  </Link>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Nav>
